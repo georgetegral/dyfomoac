@@ -426,6 +426,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         </div>
                         <hr>
 
+                        <?php
+                        $sqlPap=mysqli_query($conexion,"SELECT * FROM tutor WHERE correo_tutor = '$correo' ");
+                        $info = mysqli_fetch_array($sqlPap,MYSQLI_ASSOC);
+
+                        $registrado = 1;
+
+                        if(empty($info["ocupacion"])){
+                          $registrado = 0;
+                        }
+
+                          if($registrado==1){
+
+                        ?>
+
                         <div class="content">
                           <form method="post">
                             <div class="row">
@@ -747,6 +761,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                           <div class="clearfix"></div>
 
                         </div>
+
+                        <?php
+                        } else {
+                        ?>
+
+                        <div class="content">
+                          <p class="category">Por favor ve al apartado de "Editar mi información" en la esquina superior derecha y completa tu perfil antes de continuar.</p>
+                        </div>
+
+                        <?php
+                        }
+                        ?>
 
                     </div>
                 </div>

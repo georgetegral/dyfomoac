@@ -716,6 +716,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                         <th>Grupo</th>
                                         <th>Fecha de nacimiento</th>
                                         <th>Editar</th>
+                                        <th>Evaluar menor</th>
                                       </thead>
 
                                       <tbody>
@@ -759,6 +760,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                                 <font color="red"> <?php echo @$avisos["errTable"]?></font>
                                                 <font color="green"> <?php echo @$avisos["veriTable"]?></font>
                                               </form>
+                                            </td>
+                                            <td>
+                                            <form method="get" action ="evaluarMenor.php">
+                                              <input type="hidden" name="idMenor" value="<?php echo $tupla["id"]; ?>"/>
+                                              <button type="submit" class="btn btn-info btn-fill pull-left">Evaluar</button>
+                                            </form>
                                             </td>
                                           </tr>
                                           <?php

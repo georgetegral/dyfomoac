@@ -538,6 +538,7 @@
                                  <th>Tutor #2</th>
                                  <th>Ver formatos</th>
                                  <th>Ver información</th>
+                                 <th>Evaluar Menor</th>
                                </thead>
 
                                <tbody>
@@ -587,6 +588,14 @@
                                      <input type="hidden" name="info" value="table"/>
                                      <input type="hidden" name="idMenor" value="<?php echo $tupla["id"]; ?>"/>
                                      <button type="submit" class="btn btn-info btn-fill pull-left">Ver información</button>
+                                   </form>
+                                 </td>
+
+                                 <td>
+                                   <form method="get" action ="/assets/pages/evaluarMenor.php">
+                                     <input type="hidden" name="info" value="table"/>
+                                     <input type="hidden" name="idMenor" value="<?php echo $tupla["id"]; ?>"/>
+                                     <button type="submit" class="btn btn-info btn-fill pull-left">Evaluar Menor</button>
                                    </form>
                                  </td>
 
@@ -1033,50 +1042,6 @@ var longitude= position.coords.longitude;
     document.getElementById("presForm").value = 1;
   }
 
-/*
-Esquina sup derecha:
-25.66599
--100.40516
-
-Esquina sup izquierda:
-25.66601
--100.40609
-
-Esquina inf derecha
-25.66505
--100.40515
-
-Esquina inf izquierda
-25.66505
--100.40611
-
-Debe de estar entre:
-25.66505 a 25.66601
--100.40611 a -100.40516
-
-MI CASA
-
-Esquina sup derecha:
-25.6621
--100.41488
-
-Esquina sup izquierda:
-25.66208
--100.41322
-
-Esquina inf derecha
-25.66053
--100.41318
-
-Esquina inf izquierda
-25.66052
--100.41498
-
-Debe de estar entre:
-25.6605 a 25.6620
--100.41318 a -100.41488
-
-*/
 }
 </script>
 
