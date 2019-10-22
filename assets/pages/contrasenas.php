@@ -301,7 +301,7 @@
                                 </thead>
                                 <tbody>
                                 <?php
-                                $queryU = "SELECT nombre,apellido,tipo,correo,contrasena FROM usuarios WHERE contrasena != '' AND nombre !=''";
+                                $queryU = "SELECT nombre,apellido,tipo,correo,contrasena FROM usuarios WHERE contrasena != '' AND nombre !='' ORDER BY nombre ASC ";
                                 $resultU = $conexion->query($queryU);
                                 $arr = array();
                                 while($tupla = mysqli_fetch_array($resultU, MYSQLI_ASSOC) ){
