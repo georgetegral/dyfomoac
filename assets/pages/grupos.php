@@ -550,6 +550,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                   <p>Padres de familia</p>
                 </a>
             </li>
+            <li>
+                <a href="contrasenas.php">
+                  <i class="pe-7s-news-paper"></i>
+                  <p>Contraseñas</p>
+                </a>
+            </li>
 
         </ul>
 
