@@ -10,16 +10,23 @@
    //Mostrar el estatus del item
    function status($etapa,$idm){
      include("../../config.php");
-     $sqlh=mysqli_query($conexion, "SELECT fecha, estatus FROM historialchecklist WHERE idMenor = '$idm' AND etapa = '$etapa' ");
-     $f = mysqli_fetch_array($sqlh,MYSQLI_ASSOC);
-     if(!empty($f)){
-       if($f['estatus']==0){ ?>
-       <p id="rechazado">Rechazado: [<?php echo $f['fecha'];?>]</p>
-       <?php } else if($f['estatus']==1){ ?>
-       <p id="date">Llenado: [<?php echo $f['fecha'];?>]</p>
-       <?php } else if($f['estatus']==2){ ?>
-       <p id="verificado">Verificado: [<?php echo $f['fecha'];?>]</p>
-       <?php }
+     $sqlh="SELECT fecha, estatus, idReg FROM historialchecklist WHERE idMenor = '$idm' AND etapa = '$etapa' ";
+     $resultTable = $conexion->query($sqlh);
+     if(!empty($resultTable)){
+       $res = array();
+       while($tupla = mysqli_fetch_array($resultTable, MYSQLI_ASSOC) ){
+         $res[] = $tupla;
+       }
+       foreach ($res as $f){
+         if($f['estatus']==0){ ?>
+           <p id="rechazado">Rechazado: [<?php echo $f['fecha'];?>]</p>
+         <?php } else if($f['estatus']==1){ ?>
+           <p id="date">Llenado: [<?php echo $f['fecha'];?>]</p>
+         <?php } else if($f['estatus']==2){ ?>
+           <p id="verificado">Verificado: [<?php echo $f['fecha'];?>]</p>
+         <?php } ?>
+         <?php
+        }
      }
    }
 
@@ -446,7 +453,8 @@
          $sqlUpdate=mysqli_query($conexion,"UPDATE checklist SET ".$info."ok='1' WHERE idMen='$idm'");
          $conexion->query($sqlUpdate);
          foreach ($val as $key => $value) {
-           $sqlRegister=mysqli_query($conexion,"UPDATE historialchecklist SET observ=1, fecha='$fechaAct', estatus=2 WHERE idMenor='$idm' AND etapa='$key'");
+           //$sqlRegister=mysqli_query($conexion,"UPDATE historialchecklist SET observ=1, fecha='$fechaAct', estatus=2 WHERE idMenor='$idm' AND etapa='$key'");
+           $sqlRegister=mysqli_query($conexion,"INSERT INTO historialchecklist (idMenor,etapa,observ,fecha,estatus) VALUES ('$idm','$key','1','$fechaAct','2')");
            $conexion->query($sqlRegister);
          }
        }else {
@@ -456,7 +464,8 @@
              $sqlCheck=mysqli_query($conexion,"SELECT * FROM historialchecklist WHERE idMenor='$idm' AND etapa='$key'");
              $check = mysqli_fetch_array($sqlCheck,MYSQLI_ASSOC);
              if($check){
-               $sqlRegister=mysqli_query($conexion,"UPDATE historialchecklist SET observ=0, fecha='$fechaAct', estatus=0 WHERE idMenor='$idm' AND etapa='$key'");
+               //$sqlRegister=mysqli_query($conexion,"UPDATE historialchecklist SET observ=0, fecha='$fechaAct', estatus=0 WHERE idMenor='$idm' AND etapa='$key'");
+               $sqlRegister=mysqli_query($conexion,"INSERT INTO historialchecklist (idMenor,etapa,observ,fecha,estatus) VALUES ('$idm','$key','0','$fechaAct','0')");
              } else {
                $sqlRegister=mysqli_query($conexion,"INSERT INTO historialchecklist (idMenor,etapa,observ,fecha,estatus) VALUES ('$idm','$key','0','$fechaAct','0')");
              }
