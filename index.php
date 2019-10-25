@@ -444,8 +444,6 @@
                                  <th>Fecha de nacimiento</th>
                                  <th>Edad</th>
                                  <th>Grupo</th>
-                                 <th>Tutor #1</th>
-                                 <th>Tutor #2</th>
                                  <th>Ver formatos</th>
                                </thead>
 
@@ -453,39 +451,23 @@
                                  <tr>
                                  <?php
                                  include("config.php");
-                                 $queryTable="SELECT m.id AS id, m.nombre AS mnombre, m.apellido AS mapellido, m.fecha_nacimiento AS mfnac, g.etapa AS grupo,
-                                 u.nombre AS unombre, u.apellido AS uapellido FROM menor AS m, dependientes AS d, tutor AS t, usuarios AS u, grupo AS g
-                                 WHERE u.correo=t.correo_tutor AND t.correo_tutor=d.correo_tutor AND d.id_menor=m.id AND m.activo='1' AND m.id_grupo=g.id ORDER BY mnombre";
-                                 /*
-                                 $check1_res = mysqli_query($conexion, $queryTable);
-                                 if (!$check1_res) {
-                                   printf("Error: %s\n", mysqli_error($conexion));
-                                   exit();
-                                 }
-                                 */
+
+                                 $queryTable="SELECT m.id AS id, m.nombre AS mnombre, m.apellido AS mapellido, m.fecha_nacimiento AS mfnac, g.etapa AS grupo FROM
+                                 menor AS m, grupo AS g WHERE g.id=m.id_grupo AND m.activo='1' ORDER BY mnombre ";
+
                                  $resultTable = $conexion->query($queryTable);
                                  $res = array();
                                  while($tupla = mysqli_fetch_array($resultTable, MYSQLI_ASSOC) ){
                                    $res[] = $tupla;
                                  }
 
-                                 $prev="";
-
                                  foreach ($res as $tupla){
                                  ?>
 
-                                 <?php
-                                 if($prev!=$tupla["mnombre"]){
-                                 ?>
                                  <td><?php echo $tupla["mnombre"]." ".$tupla["mapellido"]; ?></td>
                                  <td><?php echo $tupla["mfnac"]; ?></td>
                                  <td><?php echo calc($tupla["mfnac"]).' años'; ?></td>
                                  <td><?php echo $tupla["grupo"]; ?></td>
-                                 <td><?php echo $tupla["unombre"]." ".$tupla["uapellido"]; ?></td>
-                                 <?php
-                                 } else {
-                                 ?>
-                                 <td><?php echo $tupla["unombre"]." ".$tupla["uapellido"]; ?></td>
 
                                  <td>
                                    <form method="get" action ="verFormatos.php">
@@ -501,12 +483,6 @@
                                  <?php
                                  }
                                  ?>
-
-                                 <?php
-                                 $prev=$tupla["mnombre"];
-                                 }
-                                 ?>
-
 
                                </tbody>
                              </table>
@@ -540,8 +516,6 @@
                                  <th>Fecha de nacimiento</th>
                                  <th>Edad</th>
                                  <th>Grupo</th>
-                                 <th>Tutor #1</th>
-                                 <th>Tutor #2</th>
                                  <th>Ver formatos</th>
                                  <th>Ver información</th>
                                  <th>Evaluar Menor</th>
@@ -551,33 +525,23 @@
                                  <tr>
                                  <?php
                                  include("config.php");
-                                 $queryTable="SELECT m.id AS id, m.nombre AS mnombre, m.apellido AS mapellido, m.fecha_nacimiento AS mfnac, g.etapa AS grupo,
-                                 u.nombre AS unombre, u.apellido AS uapellido FROM menor AS m, dependientes AS d, tutor AS t, usuarios AS u, grupo AS g
-                                 WHERE u.correo=t.correo_tutor AND t.correo_tutor=d.correo_tutor AND d.id_menor=m.id AND m.activo='1' AND m.id_grupo=g.id AND g.correo_maestro='$correo' ORDER BY mnombre";
 
+                                 $queryTable="SELECT m.id AS id, m.nombre AS mnombre, m.apellido AS mapellido, m.fecha_nacimiento AS mfnac, g.etapa AS grupo FROM
+                                 menor AS m, grupo AS g WHERE g.id=m.id_grupo AND m.activo='1' AND g.correo_maestro='$correo' ORDER BY mnombre ";
+                                 
                                  $resultTable = $conexion->query($queryTable);
                                  $res = array();
                                  while($tupla = mysqli_fetch_array($resultTable, MYSQLI_ASSOC) ){
                                    $res[] = $tupla;
                                  }
 
-                                 $prev="";
-
                                  foreach ($res as $tupla){
                                  ?>
 
-                                 <?php
-                                 if($prev!=$tupla["mnombre"]){
-                                 ?>
                                  <td><?php echo $tupla["mnombre"]." ".$tupla["mapellido"]; ?></td>
                                  <td><?php echo $tupla["mfnac"]; ?></td>
                                  <td><?php echo calc($tupla["mfnac"]).' años'; ?></td>
                                  <td><?php echo $tupla["grupo"]; ?></td>
-                                 <td><?php echo $tupla["unombre"]." ".$tupla["uapellido"]; ?></td>
-                                 <?php
-                                 } else {
-                                 ?>
-                                 <td><?php echo $tupla["unombre"]." ".$tupla["uapellido"]; ?></td>
 
                                  <td>
                                    <form method="get" action ="verFormatos.php">
@@ -607,11 +571,6 @@
 
                                  </tr>
                                  <?php
-                                 }
-                                 ?>
-
-                                 <?php
-                                 $prev=$tupla["mnombre"];
                                  }
                                  ?>
 
@@ -672,13 +631,7 @@
                                  $queryTable="SELECT m.id AS id, m.nombre AS mnombre, m.apellido AS mapellido, m.fecha_nacimiento AS mfnac,
                                  u.nombre AS unombre, u.apellido AS uapellido FROM menor AS m, dependientes AS d, tutor AS t, usuarios AS u
                                  WHERE u.correo=t.correo_tutor AND t.correo_tutor=d.correo_tutor AND d.id_menor=m.id AND d.correo_tutor='$correo' AND m.activo='1'";
-                                 /*
-                                 $check1_res = mysqli_query($conexion, $queryTable);
-                                 if (!$check1_res) {
-                                   printf("Error: %s\n", mysqli_error($conexion));
-                                   exit();
-                                 }
-                                 */
+
                                  $resultTable = $conexion->query($queryTable);
                                  $res = array();
                                  while($tupla = mysqli_fetch_array($resultTable, MYSQLI_ASSOC) ){
@@ -859,8 +812,6 @@
                                   <thead>
                                     <th>Nombre</th>
                                     <th>Grupo</th>
-                                    <th>Tutor #1</th>
-                                    <th>Tutor #2</th>
                                     <th>Verificar Reporte Ingreso</th>
                                     <th>Llenar Reporte Durante</th>
                                     <th>Llenar Reporte Salida</th>
@@ -869,7 +820,6 @@
                                   <tbody>
                                     <tr>
                                     <?php
-
                                     $queryTable="SELECT m.id AS id, m.nombre AS mnombre, m.apellido AS mapellido, m.fecha_nacimiento AS mfnac, g.etapa AS grupo,
                                     u.nombre AS unombre, u.apellido AS uapellido FROM menor AS m, dependientes AS d, tutor AS t, usuarios AS u, grupo AS g
                                     WHERE u.correo=t.correo_tutor AND t.correo_tutor=d.correo_tutor AND d.id_menor=m.id AND m.activo='1' AND m.id_grupo=g.id ORDER BY mnombre";
@@ -880,21 +830,11 @@
                                       $res[] = $tupla;
                                     }
 
-                                    $prev="";
-
                                     foreach ($res as $tupla){
                                     ?>
 
-                                    <?php
-                                    if($prev!=$tupla["mnombre"]){
-                                    ?>
                                     <td><?php echo $tupla["mnombre"]." ".$tupla["mapellido"]; ?></td>
                                     <td><?php echo $tupla["grupo"]; ?></td>
-                                    <td><?php echo $tupla["unombre"]." ".$tupla["uapellido"]; ?></td>
-                                    <?php
-                                    } else {
-                                    ?>
-                                    <td><?php echo $tupla["unombre"]." ".$tupla["uapellido"]; ?></td>
 
                                     <td>
 
@@ -997,12 +937,6 @@
                                     <?php
                                     }
                                     ?>
-
-                                    <?php
-                                    $prev=$tupla["mnombre"];
-                                    }
-                                    ?>
-
 
                                   </tbody>
                               </table>
